@@ -1,28 +1,56 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { memo, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ThemeProvider } from "styled-components/macro";
+import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import { UrlScreen, DownloadScreen } from "./screens";
+
+const theme = {
+  bgColor: "#fafafa",
+  mainColor: "#5b3cc4",
+  secColor: "#f96854"
+};
+
+const App = memo(() => {
+  const [lessonNames, setLessonNames] = useState([]);
+  const [lessonUrls, setLessonUrls] = useState([]);
+  return (
+    <div
+      css={`
+        width: 100%;
+        margin: auto;
+        height: 100vh;
+      `}
+    >
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <UrlScreen
+                  {...props}
+                  setLessonNames={setLessonNames}
+                  setLessonUrls={setLessonUrls}
+                />
+              )}
+            />
+            <Route
+              path="/download"
+              render={props => (
+                <DownloadScreen
+                  {...props}
+                  lessonNames={lessonNames}
+                  lessonUrls={lessonUrls}
+                />
+              )}
+            />
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </div>
+  );
+});
 
 export default App;

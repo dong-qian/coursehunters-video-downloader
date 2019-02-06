@@ -1,17 +1,44 @@
 {
   "name": "coursehunters-downloader",
+  "author": "Dong Qian",
   "version": "0.1.0",
+  "keywords": [
+    "React",
+    "Create React App",
+    "course hunters",
+    "Downloader",
+    "video",
+    "Electron",
+    "Tutorial"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:qiandongyq/coursehunters-downloader.git"
+  },
   "private": true,
   "dependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-scripts": "2.1.3"
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
+    "react-lottie": "^1.2.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.3",
+    "react-spring": "^7.2.10",
+    "styled-components": "^4.1.3",
+    "validator": "^10.11.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "nf start -p 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-start": "node src/electron-wait-react",
+    "react-start": "react-scripts start",
+    "pack": "build --dir",
+    "dist": "npm run build && build",
+    "postinstall": "install-app-deps"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -21,5 +48,23 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.0",
+    "electron": "^4.0.0",
+    "electron-builder": "^20.38.4",
+    "foreman": "^3.0.1"
+  },
+  "main": "public/electron.js",
+  "homepage": "./",
+  "build": {
+    "appId": "com.coursehunt-downloader.app",
+    "copyright": "Copyright © 2018 ${author}",
+    "directories": {
+      "buildResources": "public"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  }
 }
