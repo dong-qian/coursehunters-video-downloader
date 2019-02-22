@@ -1,6 +1,7 @@
 import Header from "./Header";
 import CourseUrlInput from "./CourseUrlInput";
 import CourseVideoList from "./CourseVideoList";
-import ControlHeader from "./ControlHeader";
+import DownloadController from "./DownloadController";
+import Sidebar from "./Sidebar";
 
-export { Header, CourseUrlInput, CourseVideoList, ControlHeader };
+export { Header, CourseUrlInput, CourseVideoList, DownloadController, Sidebar };

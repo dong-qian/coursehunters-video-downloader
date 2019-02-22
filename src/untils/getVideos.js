@@ -11,7 +11,7 @@ export default async courseUrl => {
       throw err;
     }
   } else {
-    throw new Error("Url is not valid");
+    throw new Error("Course url is not valid");
   }
 };
 
@@ -42,6 +42,12 @@ const getCourseNamesAndURLS = async courseUrl => {
 
     /* Here chapter urls are fetched from the <span> tags */
     const lessonUrls = filterLessonUrls.map(el => el.attribs.href);
+
+    if (lessonUrls.length === 0) {
+      throw new Error(
+        "Course url is not valid or not videos can be downloaded"
+      );
+    }
 
     return { lessonNames, lessonUrls };
   } catch (err) {

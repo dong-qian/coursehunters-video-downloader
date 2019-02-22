@@ -3,11 +3,10 @@ import { Spring } from "react-spring";
 import { Container, Input, GetVideoIcon } from "./styles";
 
 import Lottie from "react-lottie";
-import animationData from "../../assets/urlLoading.json";
+import animationData from "../../assets/lottie/urlLoading.json";
 
 const CourseUrlInput = memo(props => {
   const handleInputChange = e => {
-    console.log(e.target.value);
     props.setUrl(e.target.value);
   };
 
@@ -25,13 +24,7 @@ const CourseUrlInput = memo(props => {
   return (
     <Container>
       {isLoading ? (
-        <Lottie
-          options={defaultOptions}
-          height={250}
-          width={250}
-          isStopped={false}
-          isPaused={false}
-        />
+        <Lottie options={defaultOptions} height={250} width={250} />
       ) : (
         <Fragment>
           <Spring

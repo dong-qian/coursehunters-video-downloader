@@ -1,17 +1,24 @@
 import React, { memo, useState } from "react";
 import { CourseUrlInput } from "../../components";
 import { getVideos } from "../../untils";
-import { Container, SchoolImage, StudyImage, Title, Footer } from "./styles";
-import schoolSVG from "../../assets/urlTeaching.svg";
-import studyImage from "../../assets/urlStudy.svg";
+import {
+  Container,
+  SchoolImage,
+  StudyImage,
+  Title,
+  Footer,
+  ErrorMessage
+} from "./styles";
+import schoolSVG from "../../assets/img/urlTeaching.svg";
+import studyImage from "../../assets/img/urlStudy.svg";
 
 export default memo(props => {
   const [error, setError] = useState("");
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState("");
   const [isAnimation, setIsAnimation] = useState(false);
-  console.log(props);
+
+  const { url, setUrl } = props;
 
   const resetAnimation = () => {
     setIsLoading(false);
@@ -30,12 +37,8 @@ export default memo(props => {
     setTimeout(() => setIsLoading(true), 1200);
     setTimeout(async () => {
       try {
-        console.log("1", url);
         const data = await getVideos(url);
-        console.log("2", data);
-
-        props.setLessonNames(data.lessonNames);
-        props.setLessonUrls(data.lessonUrls);
+        props.setData(data);
         props.history.push("/download");
       } catch (err) {
         setError(err.message);
@@ -57,7 +60,7 @@ export default memo(props => {
         url={url}
       />
 
-      {isError && <div>{error}</div>}
+      {isError && <ErrorMessage>{error}</ErrorMessage>}
       <SchoolImage src={schoolSVG} />
       <StudyImage src={studyImage} />
       <Footer>version: 1.0 Beta</Footer>

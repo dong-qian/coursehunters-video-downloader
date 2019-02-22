@@ -7,7 +7,6 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /* background: #38c172; */
 `;
 
 const SchoolImage = styled.img`
@@ -26,6 +25,11 @@ const StudyImage = styled.img`
   left: 5%;
 `;
 
+const ErrorMessage = styled.div`
+  margin-top: 20px;
+  color: #fb4848;
+`;
+
 const Title = styled.div`
   font-family: "Poiret One", cursive;
   font-size: 48px;
@@ -42,4 +46,4 @@ const Footer = styled.div`
   right: 5%;
 `;
 
-export { Container, SchoolImage, StudyImage, Title, Footer };
+export { Container, SchoolImage, StudyImage, Title, Footer, ErrorMessage };
