@@ -1,13 +1,16 @@
 export default {
   background: {
-    dark: "#1d1f21",
-    darker: "#1b1d1f",
-    secondary: "#2f3033"
+    dark: '#1d1f21',
+    darker: '#1b1d1f',
+    light: '#2f3033'
   },
   color: {
-    green: "#46e4b6",
-    pink: "#ca407e",
-    grey: "#858585",
-    purple: "#3c42a5"
+    main: '#25292b',
+    secondary: '#ff5240',
+    highlighter: '#00e5bd'
+  },
+  shadow: {
+    main: 'rgba(0, 0, 0, 0.2)',
+    secondary: 'rgba(255, 117, 102, 0.4)'
   }
 };

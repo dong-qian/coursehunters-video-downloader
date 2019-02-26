@@ -1,27 +1,57 @@
-import React, { memo } from "react";
-import { Container, Search } from "./styles";
-import { Button } from "../../UI";
+import React from 'react';
+import * as S from './styles';
+import { Button } from '../../UI';
 
-const DownloadController = memo(props => {
-  const { isStart, handleStart, handleStop } = props;
+const DownloadController = React.memo(props => {
+  const {
+    isStart,
+    setIsStart,
+    handleStart,
+    handleStop,
+    handleSelectAll,
+    handleDeSelectAll,
+    filterLessons
+  } = props;
 
-  const handleClick = () => {
+  const [isSelectedAll, setIsSeletedAll] = React.useState(true);
+
+  const handleStartClick = () => {
     if (!isStart) {
-      handleStart();
+      const cancel = handleStart();
+      if (!cancel) {
+        setIsStart(true);
+      }
     } else {
       handleStop();
+      setIsStart(false);
     }
   };
+
+  const handleSelectClick = () => {
+    if (!isSelectedAll) {
+      handleSelectAll();
+      setIsSeletedAll(true);
+    } else {
+      handleDeSelectAll();
+      setIsSeletedAll(false);
+    }
+  };
+
   return (
-    <Container>
-      <Search>
+    <S.Container>
+      <S.Search>
         <i className="fas fa-search" />
-        <input placeholder="Search for lessons" />
-      </Search>
-      <Button width={120} color="#ff5240" onClick={handleClick}>
-        {isStart ? "Stop" : "Start"}
-      </Button>
-    </Container>
+        <input placeholder="Search for lessons ..." onChange={filterLessons} />
+      </S.Search>
+      <S.Control>
+        <Button primary onClick={handleSelectClick} disabled={isStart}>
+          {isSelectedAll ? 'Deselect All' : 'Select All'}
+        </Button>
+        <Button secondary onClick={handleStartClick}>
+          {isStart ? 'Stop' : 'Start'}
+        </Button>
+      </S.Control>
+    </S.Container>
   );
 });
 

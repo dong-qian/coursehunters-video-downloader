@@ -1,92 +1,83 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { Progress } from 'react-sweet-progress';
+import posed from 'react-pose';
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
-  max-height: 500px;
-  overflow: auto;
+  height: 700px;
+  font-size: 13px;
 `;
 
-const Video = styled.div`
+export const Video = styled.div`
   display: grid;
   grid-column-gap: 20px;
-  grid-template-columns: 100px auto 100px;
-  padding: 20px 30px;
-  background: #fff;
+  grid-template-columns: 30px 100px auto 50px 80px;
+  padding: 10px 20px;
   margin: 10px 0;
-  transition: all 0.3s ease;
-  border-radius: 5px;
-  box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
+  box-shadow: 0 8px 10px 0 ${props => props.theme.shadow.main};
+  background: ${props =>
+    props.isFinished
+      ? props.theme.background.dark
+      : props.theme.background.light};
+  place-items: center start;
 `;
 
-const Left = styled.div``;
-const Middle = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+export const Preview = styled.video`
+  box-shadow: 0 10px 50px 0 ${props => props.theme.shadow.main};
 `;
 
-const Preview = styled.video`
-  border-radius: 8px;
-  box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.2);
+export const Name = styled.div`
+  font-weight: 500;
+  width: 500px;
 `;
 
-const Name = styled.div`
-  font-family: Roboto;
-  font-weight: bold;
-`;
-
-const Size = styled.div`
-  font-size: 11px;
+export const Size = styled.div`
   min-width: 300px;
-  color: #3f3f3f;
   margin-top: 8px;
   span {
-    font-size: 11px;
     margin-left: 20px;
   }
 `;
 
-const Speed = styled.span``;
+export const Speed = styled.span``;
 
-const WatchIcon = styled.div`
+export const PlayIcon = styled.div`
+  transition: all 0.3s ease;
   i {
     font-size: 32px;
-    color: #f55;
+    color: ${props => props.theme.color.secondary};
     cursor: pointer;
-    transition: all 0.3s ease;
-    &:hover {
-      font-size: 38px;
-    }
+  }
+
+  :hover {
+    transform: scale(1.1);
   }
 `;
 
-const RemainingTime = styled.div`
-  margin-top: 10px;
+export const RemainingTimer = styled.div`
+  display: grid;
+  place-items: center;
 `;
 
-const ProgressBar = styled.div`
+export const remainingText = styled.div`
+  margin-top: 10px;
+  font-size: 11px;
+`;
+
+export const ProgressBar = styled.div`
   margin-top: 5px;
   font-size: 18px;
 `;
 
-export {
-  Container,
-  Video,
-  Left,
-  Middle,
-  Right,
-  Preview,
-  Name,
-  Size,
-  Speed,
-  WatchIcon,
-  RemainingTime,
-  ProgressBar
-};
+export const StyledProgress = styled(Progress)`
+  .react-sweet-progress-symbol {
+    color: #fff;
+  }
+`;
+
+export const Watch = styled.div``;
+
+export const PosedWatch = posed(Watch)({
+  closed: { height: 0 },
+  open: { height: 'auto' }
+});

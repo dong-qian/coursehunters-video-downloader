@@ -1,13 +1,16 @@
-const fs = window.require("fs");
-const readline = window.require("readline");
-const request = window.require("request");
-const progress = window.require("request-progress");
+const fs = window.require('fs');
+const readline = window.require('readline');
+const request = window.require('request');
+const progress = window.require('request-progress');
+const _ = require('lodash');
+
+let r;
 
 const makeDownloadDir = pathname => {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(pathname)) {
       fs.mkdir(pathname, () => {
-        fs.writeFile(`${pathname}/videoList.txt`, "", () => {
+        fs.writeFile(`${pathname}/videoList.txt`, '', () => {
           resolve();
         });
       });
@@ -24,76 +27,84 @@ const getExsitVideoList = pathname => {
       input: fs.createReadStream(`${pathname}/videoList.txt`)
     });
 
-    rl.on("line", line => {
-      var arr = line.split("\n");
+    rl.on('line', line => {
+      var arr = line.split('\n');
       existVideoList.push(arr[0]);
     })
-      .on("close", () => {
+      .on('close', () => {
         resolve(existVideoList);
       })
-      .on("error", e => {
+      .on('error', e => {
+        console.log('error', e);
         reject();
-        console.log("error", e);
       });
   });
 };
 
-const downloadOne = (videoUrl, videoName, pathname, setDownloadState) => {
+const downloadOne = (
+  lesson,
+  pathname,
+  updateDownloadStatuss,
+  setFinishDownloadOne
+) => {
   return new Promise((resolve, reject) => {
-    progress(request(encodeURI(videoUrl)), { throttle: 2000, delay: 1000 })
-      .on("progress", state => {
-        console.log(state);
-        setDownloadState(state);
+    r = request(encodeURI(lesson.url));
+    progress(r, { throttle: 2000, delay: 1000 })
+      .on('progress', state => {
+        updateDownloadStatuss(state, lesson.name);
       })
-      .on("error", err => {
+      .on('error', err => {
         console.log(`${err}`.red);
+        reject();
       })
-      .on("end", function() {
-        console.log("finish one");
+      .on('end', () => {
+        setFinishDownloadOne(lesson.name);
         resolve();
-        // fs.appendFile(`${pathname}/videoList.txt`, `${videoName}\n`, () => {
-        //   resolve();
-        // });
+        fs.appendFile(`${pathname}/videoList.txt`, `${lesson.name}\n`, () => {
+          resolve();
+        });
       })
-      .pipe(fs.createWriteStream(`${pathname}/${videoName}.mp4`));
+      .pipe(fs.createWriteStream(`${pathname}/${lesson.name}.mp4`));
   });
 };
 
 const downloadVideos = async (
   downloadPath,
   url,
-  lessonNames,
-  lessonUrls,
-  setDownloadState,
-  setCurrentDownloadingVideo
+  lessons,
+  updateDownloadStatuss,
+  setFinishDownloadOne,
+  setFinishAll
 ) => {
-  let courseName = url.split("/");
-  courseName = courseName[courseName.length - 1];
+  let courseName = _.last(url.split('/'));
   const pathname = `${downloadPath}/${courseName}`;
 
   // make download folder
   await makeDownloadDir(pathname);
-  console.log("here");
 
   // get exist videos
   const existVideoList = await getExsitVideoList(pathname);
-  console.log("existVideoList", existVideoList);
 
   // start download video one by one
-  for (const [i, value] of lessonNames.entries()) {
-    console.log(lessonNames[i]);
-    setCurrentDownloadingVideo(value);
-    if (existVideoList.indexOf(value) === -1) {
+  // eslint-disable-next-line
+  for (const [i, lesson] of lessons.entries()) {
+    if (!_.includes(existVideoList, lesson.name)) {
       await downloadOne(
-        lessonUrls[i],
-        lessonNames[i],
+        lesson,
         pathname,
-        setDownloadState
+        updateDownloadStatuss,
+        setFinishDownloadOne
       );
     } else {
-      console.log("video already exist");
+      setFinishDownloadOne(lesson.name);
     }
   }
+
+  setFinishAll();
+};
+
+export const stopDownload = () => {
+  console.log(r);
 };
 
 export default downloadVideos;

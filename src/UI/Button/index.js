@@ -1,13 +1,13 @@
-import React, { memo } from "react";
-import { Container, Icon } from "./styles";
+import React from 'react';
+import * as S from './styles';
 
-const Button = memo(props => {
-  const { icon, children, width } = props;
+const Button = React.memo(props => {
+  const { icon, children } = props;
   return (
-    <Container width={width} hasIcon={!!icon} {...props}>
+    <S.StyledButton hasIcon={!!icon} {...props}>
       <span>{children}</span>
-      {icon && <Icon className={`fas fa-${icon}`} />}
-    </Container>
+      {icon && <i className={`fas fa-${icon}`} />}
+    </S.StyledButton>
   );
 });
 

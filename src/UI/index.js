@@ -1,5 +1,5 @@
-import Button from "./Button";
-import Input from "./Input";
-import GlowingGradientLoader from "./GlowingGradientLoader";
+import Button from './Button';
+import GlowingGradientLoader from './GlowingGradientLoader';
+import Checkbox from './Checkbox';
 
-export { Button, Input, GlowingGradientLoader };
+export { Button, GlowingGradientLoader, Checkbox };

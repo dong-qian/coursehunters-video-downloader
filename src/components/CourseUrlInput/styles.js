@@ -1,51 +1,59 @@
-import styled from "styled-components/macro";
+import styled from 'styled-components/macro';
+import posed from 'react-pose';
 
-const Container = styled.div`
+export const Container = styled.div`
   position: relative;
-  width: 800px;
   text-align: center;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   outline: none;
   border: none;
-  padding: 0 20px;
-  width: 100%;
+  width: 800px;
   height: 80px;
   border-radius: 50px;
-  font-family: "Signika", sans-serif;
+  font-family: 'Signika', sans-serif;
   text-align: center;
   font-size: 1.2em;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.5s ease;
+
+  background: ${props => props.theme.background.light};
+  box-shadow: 0 2px 20px ${props => props.theme.shadow.main};
+  color: #fff;
   &:hover {
-    box-shadow: 0 8px 30px rgba(255, 117, 102, 0.4);
+    box-shadow: 0 8px 30px ${props => props.theme.shadow.secondary};
   }
 `;
 
-const GetVideoIcon = styled.button`
+export const PosedInput = posed(Input)({
+  open: {
+    width: '800px',
+    opacity: 1
+  },
+  close: {
+    width: 60,
+    opacity: 0,
+    transition: { width: { duration: 400 } }
+  }
+});
+
+export const GetVideoIcon = styled.button`
   position: absolute;
-  top: 50%;
-  right: 2%;
+  top: 10px;
+  right: 10px;
   width: 60px;
   height: 60px;
   background-color: #fff;
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  backface-visibility: hidden;
 
-  &:hover {
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 20px rgba(255, 117, 102, 0.8);
-  }
+  backface-visibility: hidden;
+  outline: none;
+  transition: all 0.2s ease;
 
   i {
-    font-size: 24px;
-    color: #ff5240;
+    font-size: 28px;
+    color: ${props => props.theme.color.secondary};
   }
 `;
-
-export { Container, Input, GetVideoIcon };

@@ -1,119 +1,88 @@
-import React, { memo, useState, useEffect } from "react";
-import { Progress } from "react-sweet-progress";
-import "react-sweet-progress/lib/style.css";
+import React from 'react';
+import 'react-sweet-progress/lib/style.css';
+import ScrollBar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import _ from 'lodash';
+import { Player, BigPlayButton, LoadingSpinner } from 'video-react';
+import 'video-react/dist/video-react.css';
+import { Checkbox } from '../../UI';
 
-import { helpers } from "../../untils";
+import * as S from './styles.js';
 
-import {
-  Container,
-  Video,
-  Preview,
-  Left,
-  Middle,
-  Right,
-  Name,
-  Size,
-  Speed,
-  WatchIcon,
-  RemainingTime,
-  Percentage,
-  ProgressBar
-} from "./styles.js";
-
-const CourseVideoList = memo(props => {
-  const {
-    lessonNames,
-    lessonUrls,
-    downloadState,
-    currentDownloadingVideo
-  } = props;
-
-  const initlizeVideoStatus = () => {
-    let videosStatus = {};
-    lessonNames.forEach(l => {
-      videosStatus[l] = {
-        transferred: 0,
-        total: 0,
-        speed: 0,
-        percentage: 0,
-        remaining: 0,
-        status: "active",
-        isFinished: false
-      };
-    });
-    return videosStatus;
-  };
-
-  const [videosStatusList, setVideosStatusList] = useState(initlizeVideoStatus);
-
-  const updateVideosStatusList = () => {
-    const isFinished =
-      downloadState.size.total === downloadState.size.transferred &&
-      downloadState.size.transferred > 0;
-
-    setVideosStatusList({
-      ...videosStatusList,
-      [currentDownloadingVideo]: {
-        transferred: helpers.formatBytes(downloadState.size.transferred),
-        total: helpers.formatBytes(downloadState.size.total),
-        speed: Math.floor(downloadState.speed / 1024),
-        percentage: isFinished ? 100 : Math.floor(downloadState.percent * 100),
-        remaining: isFinished
-          ? "Done"
-          : `${helpers.formatRemainingTime(
-              downloadState.time.remaining
-            )} remaining`,
-        status: isFinished ? "success" : "active"
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (downloadState) {
-      updateVideosStatusList();
-    }
-  });
-
-  console.log("finsihList", videosStatusList);
+const CourseVideoList = React.memo(props => {
+  const { lessons, changeSelectedLessons, isStart } = props;
+  const [openIndex, setOpenIndex] = React.useState();
 
   return (
-    <Container>
-      {lessonNames.map((name, index) => {
-        const video = videosStatusList[name];
-        return (
-          <Video key={index}>
-            <Left>
-              <Preview width="100" height="auto">
-                <source src={lessonUrls[index]} type="video/mp4" />
-              </Preview>
-            </Left>
+    <S.Container>
+      <ScrollBar component="div">
+        {lessons &&
+          _.map(lessons, (l, index) => {
+            return (
+              <div key={index}>
+                <S.Video isFinished={l.isFinished}>
+                  <Checkbox
+                    disabled={isStart}
+                    checked={l.checked}
+                    onChange={() => changeSelectedLessons(l.name)}
+                  />
+                  <div>
+                    <S.Preview width="80" height="auto">
+                      <source src={l.url} type="video/mp4" />
+                    </S.Preview>
+                  </div>
+                  <div>
+                    <S.Name>{l.name}</S.Name>
+                    <S.Size>
+                      {`${l.status.transferred} of ${l.status.total}`}
+                      <S.Speed>{`${l.status.speed} kB / s`}</S.Speed>
+                    </S.Size>
 
-            <Middle>
-              <Name>{name}</Name>
+                    <S.StyledProgress
+                      percent={l.isFinished ? 100 : `${l.status.percentage}`}
+                      status={l.progress}
+                    />
+                  </div>
+                  <div>
+                    <S.PlayIcon
+                      onClick={() =>
+                        setOpenIndex(openIndex === index ? false : index)
+                      }
+                    >
+                      <i className="fas fa-video" />
+                    </S.PlayIcon>
+                  </div>
+                  <S.RemainingTimer>
+                    {l.status.remaining === 0 ? (
+                      ''
+                    ) : (
+                      <div>
+                        {l.isFinished ? (
+                          'Finished'
+                        ) : (
+                          <>
+                            {l.status.remaining}
+                            <S.remainingText>remaining</S.remainingText>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </S.RemainingTimer>
+                </S.Video>
 
-              <Size>
-                {`${video.transferred} of ${video.total}`}
-                <Speed>{`${video.speed} kb/s`}</Speed>
-              </Size>
-
-              <ProgressBar>
-                <Progress
-                  percent={`${video.percentage}`}
-                  status={video.status}
-                />
-              </ProgressBar>
-            </Middle>
-
-            <Right>
-              <WatchIcon>
-                <i className="fas fa-video" />
-              </WatchIcon>
-              <RemainingTime>{video.remaining}</RemainingTime>
-            </Right>
-          </Video>
-        );
-      })}
-    </Container>
+                <S.PosedWatch pose={openIndex === index ? 'open' : 'closed'}>
+                  {openIndex === index && (
+                    <Player playsInline src={l.url}>
+                      <BigPlayButton position="center" />
+                      <LoadingSpinner />
+                    </Player>
+                  )}
+                </S.PosedWatch>
+              </div>
+            );
+          })}
+      </ScrollBar>
+    </S.Container>
   );
 });
 

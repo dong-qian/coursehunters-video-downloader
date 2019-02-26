@@ -1,32 +1,45 @@
-import styled from "styled-components/macro";
+import styled, { css } from 'styled-components/macro';
 
-const Container = styled.button`
-  transition: all 0.2s ease;
-  padding: 0.7rem;
+export const StyledButton = styled.button`
+  height: 40px;
+  padding: 0px 15px;
   border: 0;
-  border-radius: 6px;
+  outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${props => `${props.width}px` || "100%"};
-  height: 80px;
-  background: ${props => props.color || props.theme.mainColor};
   cursor: pointer;
   position: relative;
   overflow: hidden;
   color: #fff;
-  box-sizing: border-box;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  transition: all 0.3s linear;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 
-  &:hover {
-    box-shadow: 0 8px 25px -8px ${props => props.color || props.theme.mainColor};
+  box-shadow: 0px 5px 10px ${props => props.theme.shadow.main};
+
+  :hover {
+    transform: translateY(-2px);
+  }
+
+  :disabled {
+    background: #ddd;
+    cursor: not-allowed;
   }
 
   i {
     margin-left: 0.5rem;
   }
+
+  ${({ primary }) =>
+    primary &&
+    css`
+      background: ${props => props.theme.color.main};
+    `}
+
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      background: ${props => props.theme.color.secondary};
+    `}
 `;
-
-const Icon = styled.i``;
-
-export { Container, Icon };

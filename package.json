@@ -1,15 +1,18 @@
 {
   "name": "coursehunters-downloader",
+  "description": "A useful tool to help you download thousands of tutorial from coursehunters.net",
   "author": "Dong Qian",
-  "version": "0.1.0",
+  "version": "0.0.1",
+  "license": "MIT",
   "keywords": [
-    "React",
-    "Create React App",
+    "react",
+    "create React App",
     "course hunters",
-    "Downloader",
+    "downloader",
     "video",
-    "Electron",
-    "Tutorial"
+    "electron",
+    "tutorial",
+    "programming"
   ],
   "repository": {
     "type": "git",
@@ -17,22 +20,26 @@
   },
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
-    "pretty-checkbox": "^3.0.3",
+    "lodash": "^4.17.11",
     "react": "^16.8.0-alpha.1",
-    "react-awesome-button": "^5.0.0",
     "react-dom": "^16.8.0-alpha.1",
     "react-lottie": "^1.2.3",
-    "react-router-dom": "^4.3.1",
+    "react-perfect-scrollbar": "^1.4.4",
+    "react-pose": "^4.0.7",
     "react-scripts": "^2.1.3",
-    "react-spring": "^7.2.10",
     "react-sweet-progress": "^1.1.2",
+    "react-toastify": "^4.5.2",
+    "react-video-thumbnail": "^0.1.3",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
     "styled-components": "^4.1.3",
     "styled-reset": "^1.6.8",
-    "validator": "^10.11.0"
+    "validator": "^10.11.0",
+    "video-react": "^0.13.2",
+    "yarn": "^1.13.0"
   },
   "scripts": {
     "start": "nf start -p 3000",
@@ -42,9 +49,10 @@
     "electron": "electron .",
     "electron-start": "node src/electron-wait-react",
     "react-start": "react-scripts start",
-    "pack": "build --dir",
-    "dist": "npm run build && build",
-    "postinstall": "install-app-deps"
+    "pack": "electron-builder --dir",
+    "dist": "build --c.extraMetadata.main=build/electron.js -p always",
+    "postinstall": "install-app-deps package.json",
+    "clean": "rm -rf build dist"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,11 +74,6 @@
   "build": {
     "appId": "com.coursehunt-downloader.app",
     "copyright": "Copyright © 2018 ${author}",
-    "directories": {
-      "buildResources": "public"
-    },
-    "win": {
-      "target": "nsis"
-    }
+    "productName": "React Electron App"
   }
 }

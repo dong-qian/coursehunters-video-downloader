@@ -1,6 +1,6 @@
-import styled from "styled-components/macro";
+import styled from 'styled-components/macro';
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
   height: 100vh;
   margin: auto;
@@ -10,21 +10,18 @@ const Container = styled.div`
   color: #fff;
 `;
 
-const Left = styled.div`
-  padding: 30px 0;
-  background-color: ${props => props.theme.background.dark};
+export const Left = styled.div`
   display: grid;
   grid-template-rows: 50px auto 50px;
+  position: relative;
+  background-color: ${props => props.theme.background.dark};
 `;
 
-const Right = styled.div`
-  background-color: ${props => props.theme.background.darker};
+export const Right = styled.div`
   padding: 3rem 2rem 3rem 1rem;
+  background-color: ${props => props.theme.background.darker};
 `;
-
-const CourseTitle = styled.div`
+export const Title = styled.div`
   font-size: 20px;
   font-weight: bold;
 `;
-
-export { Container, Left, Right, CourseTitle };

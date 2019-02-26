@@ -1,15 +1,16 @@
-import styled from "styled-components/macro";
+import styled from 'styled-components/macro';
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background: ${props => props.theme.background.dark};
 `;
 
-const SchoolImage = styled.img`
+export const SchoolImage = styled.img`
   position: absolute;
   width: 300px;
   height: 300px;
@@ -17,7 +18,7 @@ const SchoolImage = styled.img`
   right: 5%;
 `;
 
-const StudyImage = styled.img`
+export const StudyImage = styled.img`
   position: absolute;
   width: 300px;
   height: 300px;
@@ -25,25 +26,24 @@ const StudyImage = styled.img`
   left: 5%;
 `;
 
-const ErrorMessage = styled.div`
+export const ErrorMessage = styled.div`
   margin-top: 20px;
-  color: #fb4848;
+  color: ${props => props.theme.color.secondary};
 `;
 
-const Title = styled.div`
-  font-family: "Poiret One", cursive;
+export const Title = styled.div`
+  font-family: Raleway, cursive;
   font-size: 48px;
   position: absolute;
   top: 20%;
-  left: 10%;
+  left: 5%;
+  z-index: 5;
 `;
 
-const Footer = styled.div`
-  font-family: "Poiret One", cursive;
+export const Footer = styled.div`
+  font-family: Raleway, cursive;
   position: absolute;
   font-weight: 700;
   bottom: 5%;
   right: 5%;
 `;
-
-export { Container, SchoolImage, StudyImage, Title, Footer, ErrorMessage };

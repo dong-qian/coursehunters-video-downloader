@@ -1,10 +1,15 @@
-import styled from "styled-components/macro";
+import styled from 'styled-components/macro';
 
-const Band = styled.div`
+export const Container = styled.div`
+  font-family: Raleway, 'Roboto Mono';
+`;
+export const Band = styled.div`
   font-size: 1.5rem;
+
   font-weight: bold;
   display: flex;
   align-items: center;
+  margin-top: 2rem;
 
   div {
     margin: 0 2.2rem;
@@ -13,10 +18,11 @@ const Band = styled.div`
   }
 `;
 
-const Summary = styled.div`
+export const Summary = styled.div`
   margin-top: 5rem;
   font-size: 1rem;
   font-weight: bold;
+
   div {
     padding-left: 2rem;
     margin: 4rem 0;
@@ -29,16 +35,21 @@ const Summary = styled.div`
   }
 `;
 
-const BackController = styled.div`
+export const Speed = styled.span`
+  color: ${props => props.start !== 0 && props.theme.color.highlighter};
+`;
+
+export const BackButton = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  left: 20%;
+  width: 100%;
   padding: 1rem 2rem;
-  margin: auto;
   width: 80px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  display: grid;
-  grid-template-columns: 40px auto;
-  place-items: center;
+  display: flex;
 
   :hover {
     border: 1px solid ${props => props.theme.color.grey};
@@ -49,5 +60,3 @@ const BackController = styled.div`
     margin-right: 2rem;
   }
 `;
-
-export { Band, Summary, BackController };

@@ -1,19 +1,14 @@
-import React, { memo, useState } from "react";
-import { CourseUrlInput } from "../../components";
-import { getVideos } from "../../untils";
-import {
-  Container,
-  SchoolImage,
-  StudyImage,
-  Title,
-  Footer,
-  ErrorMessage
-} from "./styles";
-import schoolSVG from "../../assets/img/urlTeaching.svg";
-import studyImage from "../../assets/img/urlStudy.svg";
+import React, { memo, useState } from 'react';
+import { navigate } from '@reach/router';
+import { CourseUrlInput } from '../../components';
+import { getVideos } from '../../untils';
+import * as S from './styles';
+import schoolSVG from '../../assets/img/urlTeaching.svg';
+import studyImage from '../../assets/img/urlStudy.svg';
+import * as version from '../../config/version';
 
-export default memo(props => {
-  const [error, setError] = useState("");
+const UrlScreen = memo(props => {
+  const [error, setError] = useState('');
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
@@ -26,7 +21,7 @@ export default memo(props => {
   };
 
   const resetError = () => {
-    setError("");
+    setError('');
     setIsError(false);
   };
 
@@ -34,12 +29,12 @@ export default memo(props => {
     resetAnimation();
     resetError();
     setIsAnimation(true);
-    setTimeout(() => setIsLoading(true), 1200);
+    setTimeout(() => setIsLoading(true), 1000);
     setTimeout(async () => {
       try {
         const data = await getVideos(url);
         props.setData(data);
-        props.history.push("/download");
+        navigate('/download');
       } catch (err) {
         setError(err.message);
         setIsError(true);
@@ -49,8 +44,8 @@ export default memo(props => {
   };
 
   return (
-    <Container>
-      <Title>CouseHunters Video Downloader</Title>
+    <S.Container>
+      <S.Title>CouseHunters Video Downloader</S.Title>
       <CourseUrlInput
         handleUrl={handleUrl}
         isError={isError}
@@ -60,10 +55,12 @@ export default memo(props => {
         url={url}
       />
 
-      {isError && <ErrorMessage>{error}</ErrorMessage>}
-      <SchoolImage src={schoolSVG} />
-      <StudyImage src={studyImage} />
-      <Footer>version: 1.0 Beta</Footer>
-    </Container>
+      {isError && <S.ErrorMessage>{error}</S.ErrorMessage>}
+      <S.SchoolImage src={schoolSVG} />
+      <S.StudyImage src={studyImage} />
+      <S.Footer>version: {version.version}</S.Footer>
+    </S.Container>
   );
 });
+
+export default UrlScreen;

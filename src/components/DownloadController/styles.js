@@ -1,15 +1,14 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 30px 0 20px 0;
 `;
 
-const Search = styled.div`
-  color: #a6a6a6;
+export const Search = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,11 +19,18 @@ const Search = styled.div`
   }
 
   input {
-    border: none;
+    border: 0;
     outline: none;
-    background: none;
-    font-size: 16px;
+    background: ${props => props.theme.color.main};
+    font-size: 14px;
+    color: #fff;
+    width: 300px;
+    padding: 5px 15px;
   }
 `;
 
-export { Container, Search };
+export const Control = styled.div`
+  display: grid;
+  grid-template-columns: 150px 80px;
+  grid-column-gap: 15px;
+`;

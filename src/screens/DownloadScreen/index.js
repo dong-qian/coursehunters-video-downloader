@@ -1,71 +1,124 @@
-import React, { memo, useState } from "react";
+import React from 'react';
+import _ from 'lodash';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { Container, Left, Right, CourseTitle } from "./styles";
-import { CourseVideoList, DownloadController, Sidebar } from "../../components";
-import { downloadVideos } from "../../untils";
+import * as S from './styles';
+import { CourseVideoList, DownloadController, Sidebar } from '../../components';
+import { downloadVideos, helpers } from '../../untils';
 
-const electron = window.require("electron");
+import lessonRedcuer from './lessonReducer';
+
+// electron remote
+const electron = window.require('electron');
 const dialog = electron.remote.dialog;
 const getCurrentWindow = electron.remote.getCurrentWindow;
 
-export default memo(props => {
-  // const { url } = props;
+const DownloadScreen = React.memo(props => {
+  const { url, videos } = props;
+  const [lessons, dispatch] = React.useReducer(lessonRedcuer(videos), videos);
+  const [isStart, setIsStart] = React.useState(false);
+  const [speed, setSpeed] = React.useState(0);
+  const selectedLessons = React.useMemo(
+    () => _.filter(lessons, l => l.checked === true),
+    [lessons]
+  );
 
-  const url =
-    "https://coursehunters.net/course/universal-react-s-next-js-polnoe-rukovodstvo";
-  const lessonUrls = [
-    "https://vs2.coursehunters.net/udemy-ur-nextjs/lesson2.mp4",
-    "https://vs2.coursehunters.net/udemy-ur-nextjs/lesson1.mp4",
-    "https://vs2.coursehunters.net/udemy-ur-nextjs/lesson3.mp4"
-  ];
-  const lessonNames = [
-    "Lesson 2. Tools Required for this Course",
-    "Lesson 1. What is Next.js What is Server-Side Rendering",
-    "Lesson 3. Setting up Portfolio Project"
-  ];
+  const courseName = React.useMemo(
+    () => _.startCase(_.replace(_.last(url.split('/')), '-', ' ')),
+    [url]
+  );
 
-  const [isStart, setIsStart] = useState(false);
-  const [downloadState, setDownloadState] = useState();
-  const [currentDownloadingVideo, setCurrentDownloadingVideo] = useState();
+  const notify = () => toast.success('Download Completed');
 
-  const handleStart = () => {
-    setIsStart(isStart => !isStart);
-    const downloadPath = dialog.showOpenDialog({
-      properties: ["openDirectory"]
+  const updateDownloadStatus = (status, name) => {
+    const formatedStatus = helpers.formatStatus(status);
+    dispatch({
+      type: 'UPDATE_STATUS',
+      payload: { name, status: formatedStatus }
+    });
+    setSpeed(formatedStatus.speed);
+  };
+
+  const setFinishDownloadOne = name =>
+    dispatch({
+      type: 'FINISH_ONE',
+      payload: { name }
     });
 
-    if (downloadPath === undefined) return;
+  const changeSelectedLessons = name =>
+    dispatch({
+      type: 'TOGGLE_ONE_CHECK',
+      payload: { name }
+    });
+
+  const handleSelectAll = () =>
+    dispatch({
+      type: 'TOGGLE_ALL_CHECK',
+      payload: { checked: true }
+    });
+
+  const handleDeSelectAll = () =>
+    dispatch({
+      type: 'TOGGLE_ALL_CHECK',
+      payload: { checked: false }
+    });
+
+  const filterLessons = e =>
+    dispatch({
+      type: 'FILTER_LESSONS',
+      payload: { name: e.target.value }
+    });
+
+  const handleStart = () => {
+    const downloadPath = dialog.showOpenDialog({
+      properties: ['openDirectory']
+    });
+
+    if (downloadPath === undefined) return true;
     downloadVideos(
       downloadPath,
       url,
-      lessonNames,
-      lessonUrls,
-      setDownloadState,
-      setCurrentDownloadingVideo
+      selectedLessons,
+      updateDownloadStatus,
+      setFinishDownloadOne,
+      finishAll
     );
+    return false;
+  };
+
+  const finishAll = () => {
+    setIsStart(false);
+    notify();
   };
 
   const handleStop = () => getCurrentWindow().reload();
 
   return (
-    <Container>
-      <Left>
-        <Sidebar speed={3000} count={67} />
-      </Left>
-      <Right>
-        <CourseTitle>GraphQl & React Full Stack Tutroial</CourseTitle>
+    <S.Container>
+      <S.Left>
+        <Sidebar speed={speed} count={_.size(selectedLessons)} />
+      </S.Left>
+      <S.Right>
+        <S.Title>{courseName}</S.Title>
         <DownloadController
           isStart={isStart}
+          setIsStart={setIsStart}
           handleStart={handleStart}
           handleStop={handleStop}
+          handleSelectAll={handleSelectAll}
+          handleDeSelectAll={handleDeSelectAll}
+          filterLessons={filterLessons}
         />
         <CourseVideoList
-          lessonNames={lessonNames}
-          lessonUrls={lessonUrls}
-          downloadState={downloadState}
-          currentDownloadingVideo={currentDownloadingVideo}
+          isStart={isStart}
+          lessons={lessons}
+          changeSelectedLessons={changeSelectedLessons}
         />
-      </Right>
-    </Container>
+        <ToastContainer />
+      </S.Right>
+    </S.Container>
   );
 });
+
+export default DownloadScreen;
