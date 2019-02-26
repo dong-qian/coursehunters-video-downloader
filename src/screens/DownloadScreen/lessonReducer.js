@@ -49,6 +49,8 @@ export default videos => (state, action) => {
         }
       });
       return newSelectedLessons;
+    case 'RESET':
+      return action.payload.videos;
     default:
       throw new Error();
   }

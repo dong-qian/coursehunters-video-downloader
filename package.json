@@ -1,5 +1,5 @@
 {
-  "name": "Coursehunters Video Downloader",
+  "name": "coursehunters-downloader",
   "description": "A useful tool to help you download thousands of tutorial from coursehunters.net",
   "author": "Dong Qian",
   "version": "0.0.1",
@@ -33,7 +33,6 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.3",
     "react-sweet-progress": "^1.1.2",
-    "react-toastify": "^4.5.2",
     "react-video-thumbnail": "^0.1.3",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
@@ -48,7 +47,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "yarn build && build",
+    "electron-pack": "yarn clean && yarn build && build",
     "postinstall": "install-app-deps package.json",
     "clean": "rm -rf build dist"
   },

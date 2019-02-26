@@ -1,18 +1,15 @@
 import React from 'react';
 import _ from 'lodash';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import * as S from './styles';
 import { CourseVideoList, DownloadController, Sidebar } from '../../components';
-import { downloadVideos, helpers } from '../../untils';
+import { downloader, helpers } from '../../untils';
 
 import lessonRedcuer from './lessonReducer';
 
 // electron remote
 const electron = window.require('electron');
 const dialog = electron.remote.dialog;
-const getCurrentWindow = electron.remote.getCurrentWindow;
 
 const DownloadScreen = React.memo(props => {
   const { url, videos } = props;
@@ -28,8 +25,6 @@ const DownloadScreen = React.memo(props => {
     () => _.startCase(_.replace(_.last(url.split('/')), '-', ' ')),
     [url]
   );
-
-  const notify = () => toast.success('Download Completed');
 
   const updateDownloadStatus = (status, name) => {
     const formatedStatus = helpers.formatStatus(status);
@@ -76,7 +71,7 @@ const DownloadScreen = React.memo(props => {
     });
 
     if (downloadPath === undefined) return true;
-    downloadVideos(
+    downloader.downloadVideos(
       downloadPath,
       url,
       selectedLessons,
@@ -89,10 +84,20 @@ const DownloadScreen = React.memo(props => {
 
   const finishAll = () => {
     setIsStart(false);
-    notify();
   };
 
-  const handleStop = () => getCurrentWindow().reload();
+  const reset = () => {
+    dispatch({
+      type: 'RESET',
+      payload: { videos }
+    });
+    setSpeed(0);
+  };
+
+  const handleStop = () => {
+    downloader.stopDownload();
+    reset();
+  };
 
   return (
     <S.Container>
@@ -115,7 +120,6 @@ const DownloadScreen = React.memo(props => {
           lessons={lessons}
           changeSelectedLessons={changeSelectedLessons}
         />
-        <ToastContainer />
       </S.Right>
     </S.Container>
   );

@@ -4,7 +4,8 @@ const request = window.require('request');
 const progress = window.require('request-progress');
 const _ = require('lodash');
 
-let r;
+let req;
+let isStoped = false;
 
 const makeDownloadDir = pathname => {
   return new Promise((resolve, reject) => {
@@ -48,8 +49,8 @@ const downloadOne = (
   setFinishDownloadOne
 ) => {
   return new Promise((resolve, reject) => {
-    r = request(encodeURI(lesson.url));
-    progress(r, { throttle: 2000, delay: 1000 })
+    req = request(encodeURI(lesson.url));
+    progress(req, { throttle: 2000, delay: 1000 })
       .on('progress', state => {
         updateDownloadStatuss(state, lesson.name);
       })
@@ -58,6 +59,7 @@ const downloadOne = (
         reject();
       })
       .on('end', () => {
+        if (isStoped) return resolve();
         setFinishDownloadOne(lesson.name);
         resolve();
         fs.appendFile(`${pathname}/videoList.txt`, `${lesson.name}\n`, () => {
@@ -68,7 +70,7 @@ const downloadOne = (
   });
 };
 
-const downloadVideos = async (
+export const downloadVideos = async (
   downloadPath,
   url,
   lessons,
@@ -76,6 +78,7 @@ const downloadVideos = async (
   setFinishDownloadOne,
   setFinishAll
 ) => {
+  isStoped = false;
   let courseName = _.last(url.split('/'));
   const pathname = `${downloadPath}/${courseName}`;
 
@@ -88,6 +91,7 @@ const downloadVideos = async (
   // start download video one by one
   // eslint-disable-next-line
   for (const [i, lesson] of lessons.entries()) {
+    if (isStoped) return;
     if (!_.includes(existVideoList, lesson.name)) {
       await downloadOne(
         lesson,
@@ -104,7 +108,6 @@ const downloadVideos = async (
 };
 
 export const stopDownload = () => {
-  console.log(r);
+  req.abort();
+  isStoped = true;
 };
-
-export default downloadVideos;
