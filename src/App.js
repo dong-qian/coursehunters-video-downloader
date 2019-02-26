@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Router } from '@reach/router';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider, createGlobalStyle } from 'styled-components/macro';
 import reset from 'styled-reset';
 
@@ -27,6 +27,10 @@ const GlobalStyle = createGlobalStyle`
     button {
       -webkit-app-region: no-drag;
     }
+
+    input {
+      -webkit-app-region: no-drag;
+    }
   }
 `;
 
@@ -43,8 +47,27 @@ const App = memo(() => {
       <>
         <GlobalStyle whiteColor />
         <Router>
-          <UrlScreen path="/" setData={setData} url={url} setUrl={setUrl} />
-          <DownloadScreen path="/download" url={url} videos={videos} />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <UrlScreen
+                  {...props}
+                  setData={setData}
+                  url={url}
+                  setUrl={setUrl}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/download"
+              render={props => (
+                <DownloadScreen {...props} url={url} videos={videos} />
+              )}
+            />
+          </Switch>
         </Router>
       </>
     </ThemeProvider>

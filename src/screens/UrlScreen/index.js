@@ -1,5 +1,4 @@
 import React, { memo, useState } from 'react';
-import { navigate } from '@reach/router';
 import { CourseUrlInput } from '../../components';
 import { getVideos } from '../../untils';
 import * as S from './styles';
@@ -34,7 +33,7 @@ const UrlScreen = memo(props => {
       try {
         const data = await getVideos(url);
         props.setData(data);
-        navigate('/download');
+        props.history.push('/download');
       } catch (err) {
         setError(err.message);
         setIsError(true);

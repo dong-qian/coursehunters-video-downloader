@@ -1,15 +1,69 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 
 // Added for getting correct file path
 const path = require('path');
-const url = require('url');
+const isDev = require('electron-is-dev');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow() {
+const appMenu = {
+  label: app.getName(),
+  submenu: [
+    { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
+    { type: 'separator' },
+    {
+      label: 'Quit',
+      accelerator: 'Command+Q',
+      click: function() {
+        app.quit();
+      }
+    }
+  ]
+};
+
+const editMenu = {
+  label: 'Edit',
+  submenu: [
+    { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
+    { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+    { type: 'separator' },
+    { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+    { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+    { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+    { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+  ]
+};
+
+const devMenu = {
+  label: 'Dev',
+  submenu: [
+    {
+      label: 'Reload',
+      accelerator: 'CmdOrCtrl+R',
+      click: () => {
+        BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
+      }
+    },
+    {
+      label: 'Toggle DevTools',
+      accelerator: 'Alt+CmdOrCtrl+I',
+      click: () => {
+        BrowserWindow.getFocusedWindow().toggleDevTools();
+      }
+    }
+  ]
+};
+
+const createWindow = () => {
+  const menu = [appMenu, editMenu];
+  if (isDev) {
+    menu.push(devMenu);
+  }
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -20,36 +74,24 @@ function createWindow() {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      devTools: false,
       webSecurity: false
     }
   });
 
-  // and load the index.html of the app.
-  // mainWindow.loadFile('index.html');
-
-  // Added for use with create-react-app
-  //mainWindow.loadFile('./public/index.html'); //@TODO this serves a white screen as it cannot find the index.html
-
-  // This serves the proper html, it should be replaced with the new loadFile method at some point
-  const startUrl =
-    process.env.ELECTRON_START_URL ||
-    url.format({
-      pathname: path.join(__dirname, '/../build/index.html'),
-      protocol: 'file:',
-      slashes: true
-    });
-
-  mainWindow.loadURL(startUrl);
+  mainWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  );
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
+  mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-}
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -57,7 +99,7 @@ function createWindow() {
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -65,7 +107,7 @@ app.on('window-all-closed', function() {
   }
 });
 
-app.on('activate', function() {
+app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {

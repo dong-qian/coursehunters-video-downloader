@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 
 import { GlowingGradientLoader } from '../../UI';
 import * as S from './styles';
