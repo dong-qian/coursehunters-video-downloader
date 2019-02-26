@@ -3,7 +3,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import _ from 'lodash';
 
-export default async courseUrl => {
+export const getVideos = async courseUrl => {
   if (validator.isURL(courseUrl)) {
     try {
       const data = await getCourseNamesAndURLS(courseUrl);

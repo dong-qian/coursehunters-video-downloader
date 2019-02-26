@@ -23,7 +23,6 @@ export const StyledButton = styled.button`
   }
 
   :disabled {
-    background: #ddd;
     cursor: not-allowed;
   }
 

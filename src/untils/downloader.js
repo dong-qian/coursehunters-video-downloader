@@ -15,6 +15,10 @@ const makeDownloadDir = pathname => {
           resolve();
         });
       });
+    } else if (!fs.existsSync(`${pathname}/videoList.txt`)) {
+      fs.writeFile(`${pathname}/videoList.txt`, '', () => {
+        resolve();
+      });
     } else {
       resolve();
     }
@@ -108,6 +112,8 @@ export const downloadVideos = async (
 };
 
 export const stopDownload = () => {
-  req.abort();
-  isStoped = true;
+  if (req !== undefined) {
+    req.abort();
+    isStoped = true;
+  }
 };

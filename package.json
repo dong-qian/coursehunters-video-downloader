@@ -1,5 +1,5 @@
 {
-  "name": "coursehunters-downloader",
+  "name": "coursehunters-video-downloader",
   "description": "A useful tool to help you download thousands of tutorial from coursehunters.net",
   "author": "Dong Qian",
   "version": "0.0.1",
@@ -16,9 +16,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:qiandongyq/coursehunters-downloader.git"
+    "url": "git@github.com:qiandongyq/coursehunters-video-downloader.git"
   },
-  "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
@@ -47,9 +46,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "yarn clean && yarn build && build",
+    "electron-pack": "yarn clean && yarn build && build -mwl",
+    "electron-release": "yarn clean && yarn build && build -mwl --publish always",
     "postinstall": "install-app-deps package.json",
-    "clean": "rm -rf build dist"
+    "clean": "rm -rf build dist release"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -70,14 +70,21 @@
   "main": "public/electron.js",
   "homepage": "./",
   "build": {
-    "appId": "com.coursehunters-downloader.app",
+    "appId": "com.coursehunters-video-downloader.app",
     "copyright": "Copyright © 2018 ${author}",
     "productName": "Coursehunters Video Downloader",
     "files": [
       "build/**/*"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "coursehunters-video-downloader",
+      "repo": "coursehunters-video-downloader",
+      "private": false
     }
   }
 }

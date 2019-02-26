@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { GlowingGradientLoader } from '../../UI';
 import * as S from './styles';
 
 const Sidebar = React.memo(props => {
-  const { speed = 0, count = 0 } = props;
+  const { speed = 0, count = 0, handleStop } = props;
+
+  const handleBackButtonClick = () => {
+    handleStop();
+    props.history.push('/');
+  };
 
   return (
     <S.Container>
@@ -27,12 +31,10 @@ const Sidebar = React.memo(props => {
           Settings
         </div>
       </S.Summary>
-      <Link to="/">
-        <S.BackButton>
-          <i className="fas fa-long-arrow-alt-left" />
-          Back
-        </S.BackButton>
-      </Link>
+      <S.BackButton onClick={handleBackButtonClick}>
+        <i className="fas fa-long-arrow-alt-left" />
+        Back
+      </S.BackButton>
     </S.Container>
   );
 });

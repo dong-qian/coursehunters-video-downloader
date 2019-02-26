@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import * as S from './styles';
 import { CourseVideoList, DownloadController, Sidebar } from '../../components';
-import { downloader, helpers } from '../../untils';
+import { downloader, helper } from '../../untils';
 
 import lessonRedcuer from './lessonReducer';
 
@@ -27,7 +27,7 @@ const DownloadScreen = React.memo(props => {
   );
 
   const updateDownloadStatus = (status, name) => {
-    const formatedStatus = helpers.formatStatus(status);
+    const formatedStatus = helper.formatStatus(status);
     dispatch({
       type: 'UPDATE_STATUS',
       payload: { name, status: formatedStatus }
@@ -92,6 +92,7 @@ const DownloadScreen = React.memo(props => {
       payload: { videos }
     });
     setSpeed(0);
+    setIsStart(false);
   };
 
   const handleStop = () => {
@@ -102,7 +103,12 @@ const DownloadScreen = React.memo(props => {
   return (
     <S.Container>
       <S.Left>
-        <Sidebar speed={speed} count={_.size(selectedLessons)} />
+        <Sidebar
+          history={props.history}
+          speed={speed}
+          count={_.size(selectedLessons)}
+          handleStop={handleStop}
+        />
       </S.Left>
       <S.Right>
         <S.Title>{courseName}</S.Title>

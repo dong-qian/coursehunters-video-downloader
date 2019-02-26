@@ -44,7 +44,6 @@ export const StyledCheckbox = styled.div`
   ${({ disabled }) =>
     disabled &&
     css`
-      background: #ddd;
       cursor: not-allowed;
     `}
 

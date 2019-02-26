@@ -1,5 +1,5 @@
-import getVideos from './getVideos';
-import * as downloader from './downloadVideos';
-import * as helpers from './helpers';
+import * as video from './video';
+import * as downloader from './downloader';
+import * as helper from './helper';
 
-export { getVideos, downloader, helpers };
+export { video, downloader, helper };

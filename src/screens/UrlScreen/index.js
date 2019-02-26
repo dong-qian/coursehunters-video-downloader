@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { CourseUrlInput } from '../../components';
-import { getVideos } from '../../untils';
+import { video } from '../../untils';
 import * as S from './styles';
 import schoolSVG from '../../assets/img/urlTeaching.svg';
 import studyImage from '../../assets/img/urlStudy.svg';
@@ -31,7 +31,7 @@ const UrlScreen = memo(props => {
     setTimeout(() => setIsLoading(true), 1000);
     setTimeout(async () => {
       try {
-        const data = await getVideos(url);
+        const data = await video.getVideos(url);
         props.setData(data);
         props.history.push('/download');
       } catch (err) {
