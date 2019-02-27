@@ -18,15 +18,15 @@ Cousehunters resource video programming tutorials for front and back end develop
 
 - [x] Only Require course url
 - [x] Only need One click
-- [x] Enable to search videos by its name
-- [x] Enable to pick up specific videos to download
+- [x] Search videos by its name
+- [x] Pick specific videos to download
 - [x] Preview the video or just watch the video inside the application
 - [x] Clear show download status (video size/download speed/remaining time)
 - [x] Keep track downloaded videos to avoid duplicate or re-download progress.
 
 ## Credit
 
-- Special thanks to [coursehunters](https://coursehunters.net/) for spreading knowledge by providing free courses from great platforms.
+- Special thanks to [coursehunters](https://coursehunters.net/) for providing free courses
 
 - Inspired by [ch-download](https://github.com/alekseylovchikov/ch-download) from @[alekseylovchikov](https://github.com/alekseylovchikov) <img align="middle" width="40" height="40" src="https://avatars2.githubusercontent.com/u/2079591?s=400&v=4">
 
@@ -34,7 +34,7 @@ Cousehunters resource video programming tutorials for front and back end develop
 
 ## Demo
 
-##
+coming soon
 
 ## Quick Start
 
