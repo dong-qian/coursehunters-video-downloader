@@ -65,4 +65,4 @@ Always welcome! 🤘✌️
 
 ## License
 
-MIT
+Code in this project is [MIT Licensed](https://opensource.org/licenses/MIT).
