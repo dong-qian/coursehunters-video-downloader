@@ -18,8 +18,9 @@ const Row = React.memo(props => {
     lesson,
     index
   } = props;
+
   return (
-    <div key={lesson.name}>
+    <div>
       <S.Video isFinished={lesson.isFinished}>
         <Checkbox
           disabled={isStart}
@@ -91,6 +92,7 @@ const CourseVideoList = React.memo(props => {
                 isStart={isStart}
                 openIndex={openIndex}
                 setOpenIndex={setOpenIndex}
+                key={index}
               />
             );
           })}
