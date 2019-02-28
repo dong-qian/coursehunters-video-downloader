@@ -8,6 +8,13 @@
 
 ![Image](https://i.imgur.com/5nqdJy0.png)
 
+<p align="center">
+  <img src="https://img.shields.io/github/release/qiandongyq/coursehunters-video-downloader.svg" />
+  <img src="https://img.shields.io/github/downloads/qiandongyq/coursehunters-video-downloader/total.svg" />
+  <img src="https://img.shields.io/github/license/qiandongyq/coursehunters-video-downloader.svg" />
+  <img src="https://img.shields.io/github/stars/qiandongyq/coursehunters-video-downloader.svg?style=social" />
+</p>
+
 [Feature](#Features) | [Credit](#Credit) | [Demo](#Demo) | [Quick Start](#Quick-Start) | [Roadmap](#Roadmap)
 
 Cousehunters resource video programming tutorials for front and back end developers. Help you build up your skills to next level.
