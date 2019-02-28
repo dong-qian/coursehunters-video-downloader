@@ -16,10 +16,7 @@ const DownloadScreen = React.memo(props => {
   const [lessons, dispatch] = React.useReducer(lessonRedcuer(videos), videos);
   const [isStart, setIsStart] = React.useState(false);
   const [speed, setSpeed] = React.useState(0);
-  const selectedLessons = React.useMemo(
-    () => _.filter(lessons, l => l.checked === true),
-    [lessons]
-  );
+  const selectedLessons = _.filter(lessons, l => l.checked === true);
 
   const courseName = React.useMemo(
     () => _.startCase(_.replace(_.last(url.split("/")), "-", " ")),
@@ -108,6 +105,7 @@ const DownloadScreen = React.memo(props => {
           speed={speed}
           count={_.size(selectedLessons)}
           handleStop={handleStop}
+          isStart={isStart}
         />
       </S.Left>
       <S.Right>
@@ -123,7 +121,7 @@ const DownloadScreen = React.memo(props => {
         />
         <CourseVideoList
           isStart={isStart}
-          selectedLessons={selectedLessons}
+          lessons={lessons}
           changeSelectedLessons={changeSelectedLessons}
         />
       </S.Right>

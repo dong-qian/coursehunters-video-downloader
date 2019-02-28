@@ -4,14 +4,14 @@ import posed from "react-pose";
 
 export const Container = styled.div`
   width: 100%;
-  height: 650px;
+  height: 680px;
   font-size: 13px;
 `;
 
 export const Video = styled.div`
   display: grid;
   grid-column-gap: 20px;
-  grid-template-columns: 30px 100px auto 50px 80px;
+  grid-template-columns: 30px auto 50px 80px;
   padding: 10px 20px;
   margin: 10px 0;
   box-shadow: 0 8px 10px 0 ${props => props.theme.shadow.main};
@@ -28,7 +28,8 @@ export const Preview = styled.video`
 
 export const Name = styled.div`
   font-weight: 500;
-  width: 500px;
+  width: 100%;
+  min-width: 500px;
 `;
 
 export const Size = styled.div`

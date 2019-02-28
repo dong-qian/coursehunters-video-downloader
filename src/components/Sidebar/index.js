@@ -1,9 +1,9 @@
 import React from "react";
-import { GlowingGradientLoader, Button } from "../../UI";
+import { GlowingGradientLoader } from "../../UI";
 import * as S from "./styles";
 
 const Sidebar = React.memo(props => {
-  const { speed = 0, count = 0, handleStop } = props;
+  const { speed = 0, count = 0, isStart, handleStop } = props;
 
   const handleBackButtonClick = () => {
     handleStop();
@@ -31,6 +31,7 @@ const Sidebar = React.memo(props => {
         </div>
       </S.Summary>
       <S.BackButton
+        disabled={isStart}
         primary
         onClick={handleBackButtonClick}
         icon="long-arrow-alt-left"

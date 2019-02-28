@@ -3,7 +3,6 @@ import "react-sweet-progress/lib/style.css";
 import ScrollBar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import _ from "lodash";
-
 import { Player, BigPlayButton, LoadingSpinner } from "video-react";
 import "video-react/dist/video-react.css";
 import { Checkbox } from "../../UI";
@@ -28,11 +27,6 @@ const Row = React.memo(props => {
           onChange={() => changeSelectedLessons(lesson.name)}
         />
         <div>
-          <S.Preview width="80" height="auto">
-            <source src={lesson.url} type="video/mp4" />
-          </S.Preview>
-        </div>
-        <div>
           <S.Name>{lesson.name}</S.Name>
           <S.Size>
             {`${lesson.status.transferred} of ${lesson.status.total}`}
@@ -52,12 +46,12 @@ const Row = React.memo(props => {
           </S.PlayIcon>
         </div>
         <S.RemainingTimer>
-          {lesson.status.remaining === 0 ? (
-            ""
+          {lesson.isFinished ? (
+            "Completed"
           ) : (
             <div>
-              {lesson.isFinished ? (
-                "Finished"
+              {lesson.status.remaining === 0 ? (
+                ""
               ) : (
                 <>
                   {lesson.status.remaining}
@@ -81,14 +75,14 @@ const Row = React.memo(props => {
 });
 
 const CourseVideoList = React.memo(props => {
-  const { selectedLessons, changeSelectedLessons, isStart } = props;
+  const { lessons, changeSelectedLessons, isStart } = props;
   const [openIndex, setOpenIndex] = React.useState();
 
   return (
     <S.Container>
       <ScrollBar>
         <div>
-          {_.map(selectedLessons, (lesson, index) => {
+          {_.map(lessons, (lesson, index) => {
             return (
               <Row
                 lesson={lesson}

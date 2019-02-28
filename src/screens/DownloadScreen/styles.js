@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
 
 export const Container = styled.div`
   width: 100%;
@@ -18,7 +18,7 @@ export const Left = styled.div`
 `;
 
 export const Right = styled.div`
-  padding: 3rem 2rem 3rem 1rem;
+  padding: 4rem 2rem;
   background-color: ${props => props.theme.background.darker};
 `;
 export const Title = styled.div`

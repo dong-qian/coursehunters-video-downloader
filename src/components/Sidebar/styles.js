@@ -6,11 +6,10 @@ export const Container = styled.div`
 `;
 export const Band = styled.div`
   font-size: 1.5rem;
-
   font-weight: bold;
   display: flex;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 4rem;
 
   div {
     margin: 0 2.2rem;
@@ -42,7 +41,7 @@ export const Speed = styled.span`
 
 export const BackButton = styled(Button)`
   position: absolute;
-  bottom: 2rem;
+  bottom: 4.5rem;
   left: 15%;
   /* width: 100%; */
   width: 170px;

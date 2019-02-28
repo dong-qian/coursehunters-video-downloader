@@ -70,7 +70,7 @@ const createWindow = () => {
     plateFormOptions = {
       movable: true,
       frame: false,
-      titleBarStyle: "hiddenInset "
+      titleBarStyle: "hiddenInset"
     };
   }
 
