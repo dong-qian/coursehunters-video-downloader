@@ -41,7 +41,7 @@ Cousehunters resource video programming tutorials for front and back end develop
 
 ## Demo
 
-coming soon
+![demo](https://i.imgur.com/A2EHTvu.gif)
 
 ## Quick Start
 
