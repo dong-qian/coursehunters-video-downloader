@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { Progress } from 'react-sweet-progress';
-import posed from 'react-pose';
+import styled from "styled-components";
+import { Progress } from "react-sweet-progress";
+import posed from "react-pose";
 
 export const Container = styled.div`
   width: 100%;
-  height: 600px;
+  height: 650px;
   font-size: 13px;
 `;
 
@@ -79,5 +79,5 @@ export const Watch = styled.div``;
 
 export const PosedWatch = posed(Watch)({
   closed: { height: 0 },
-  open: { height: 'auto' }
+  open: { height: "auto" }
 });

@@ -1,14 +1,14 @@
-import React from 'react';
-import _ from 'lodash';
+import React from "react";
+import _ from "lodash";
 
-import * as S from './styles';
-import { CourseVideoList, DownloadController, Sidebar } from '../../components';
-import { downloader, helper } from '../../untils';
+import * as S from "./styles";
+import { CourseVideoList, DownloadController, Sidebar } from "../../components";
+import { downloader, helper } from "../../untils";
 
-import lessonRedcuer from './lessonReducer';
+import lessonRedcuer from "./lessonReducer";
 
 // electron remote
-const electron = window.require('electron');
+const electron = window.require("electron");
 const dialog = electron.remote.dialog;
 
 const DownloadScreen = React.memo(props => {
@@ -22,14 +22,14 @@ const DownloadScreen = React.memo(props => {
   );
 
   const courseName = React.useMemo(
-    () => _.startCase(_.replace(_.last(url.split('/')), '-', ' ')),
+    () => _.startCase(_.replace(_.last(url.split("/")), "-", " ")),
     [url]
   );
 
   const updateDownloadStatus = (status, name) => {
     const formatedStatus = helper.formatStatus(status);
     dispatch({
-      type: 'UPDATE_STATUS',
+      type: "UPDATE_STATUS",
       payload: { name, status: formatedStatus }
     });
     setSpeed(formatedStatus.speed);
@@ -37,37 +37,37 @@ const DownloadScreen = React.memo(props => {
 
   const setFinishDownloadOne = name =>
     dispatch({
-      type: 'FINISH_ONE',
+      type: "FINISH_ONE",
       payload: { name }
     });
 
   const changeSelectedLessons = name =>
     dispatch({
-      type: 'TOGGLE_ONE_CHECK',
+      type: "TOGGLE_ONE_CHECK",
       payload: { name }
     });
 
   const handleSelectAll = () =>
     dispatch({
-      type: 'TOGGLE_ALL_CHECK',
+      type: "TOGGLE_ALL_CHECK",
       payload: { checked: true }
     });
 
   const handleDeSelectAll = () =>
     dispatch({
-      type: 'TOGGLE_ALL_CHECK',
+      type: "TOGGLE_ALL_CHECK",
       payload: { checked: false }
     });
 
   const filterLessons = e =>
     dispatch({
-      type: 'FILTER_LESSONS',
+      type: "FILTER_LESSONS",
       payload: { name: e.target.value }
     });
 
   const handleStart = () => {
     const downloadPath = dialog.showOpenDialog({
-      properties: ['openDirectory']
+      properties: ["openDirectory"]
     });
 
     if (downloadPath === undefined) return true;
@@ -88,7 +88,7 @@ const DownloadScreen = React.memo(props => {
 
   const reset = () => {
     dispatch({
-      type: 'RESET',
+      type: "RESET",
       payload: { videos }
     });
     setSpeed(0);
@@ -123,7 +123,7 @@ const DownloadScreen = React.memo(props => {
         />
         <CourseVideoList
           isStart={isStart}
-          lessons={lessons}
+          selectedLessons={selectedLessons}
           changeSelectedLessons={changeSelectedLessons}
         />
       </S.Right>

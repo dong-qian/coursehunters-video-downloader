@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -15,7 +15,7 @@ export const Search = styled.div`
 
   i {
     margin-right: 10px;
-    font-size: 18px;
+    font-size: 24px;
   }
 
   input {
@@ -25,12 +25,12 @@ export const Search = styled.div`
     font-size: 14px;
     color: #fff;
     width: 300px;
-    padding: 5px 15px;
+    padding: 10px 15px;
   }
 `;
 
 export const Control = styled.div`
   display: grid;
-  grid-template-columns: 150px 80px;
+  grid-template-columns: 170px 100px;
   grid-column-gap: 15px;
 `;

@@ -1,7 +1,8 @@
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
+import { Button } from "../../UI";
 
 export const Container = styled.div`
-  font-family: Raleway, 'Roboto Mono';
+  font-family: Raleway, "Roboto Mono";
 `;
 export const Band = styled.div`
   font-size: 1.5rem;
@@ -39,21 +40,15 @@ export const Speed = styled.span`
   color: ${props => props.start !== 0 && props.theme.color.highlighter};
 `;
 
-export const BackButton = styled.div`
+export const BackButton = styled(Button)`
   position: absolute;
   bottom: 2rem;
-  left: 20%;
-  width: 100%;
-  padding: 1rem 2rem;
-  width: 80px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
+  left: 15%;
+  /* width: 100%; */
+  width: 170px;
 
   :hover {
     border: 1px solid ${props => props.theme.color.grey};
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   }
 
   i {

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled, { css } from "styled-components/macro";
 
 export const StyledButton = styled.button`
   height: 40px;
@@ -27,7 +27,7 @@ export const StyledButton = styled.button`
   }
 
   i {
-    margin-left: 0.5rem;
+    margin: 0 0.5rem;
   }
 
   ${({ primary }) =>

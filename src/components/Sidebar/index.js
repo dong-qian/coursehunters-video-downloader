@@ -1,14 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { GlowingGradientLoader } from '../../UI';
-import * as S from './styles';
+import React from "react";
+import { GlowingGradientLoader, Button } from "../../UI";
+import * as S from "./styles";
 
 const Sidebar = React.memo(props => {
   const { speed = 0, count = 0, handleStop } = props;
 
   const handleBackButtonClick = () => {
     handleStop();
-    props.history.push('/');
+    props.history.push("/");
   };
 
   return (
@@ -31,8 +30,12 @@ const Sidebar = React.memo(props => {
           Settings
         </div>
       </S.Summary>
-      <S.BackButton onClick={handleBackButtonClick}>
-        <i className="fas fa-long-arrow-alt-left" />
+      <S.BackButton
+        primary
+        onClick={handleBackButtonClick}
+        icon="long-arrow-alt-left"
+        iconPosition="left"
+      >
         Back
       </S.BackButton>
     </S.Container>
