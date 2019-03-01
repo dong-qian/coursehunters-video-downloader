@@ -1,44 +1,44 @@
-import _ from "lodash";
+import _ from 'lodash';
 
 export default videos => (state, action) => {
   switch (action.type) {
-    case "UPDATE_STATUS":
+    case 'UPDATE_STATUS':
       return {
         ...state,
         [action.payload.name]: {
           ...state[action.payload.name],
-          status: action.payload.status
-        }
+          status: action.payload.status,
+        },
       };
-    case "FINISH_ONE":
+    case 'FINISH_ONE':
       return {
         ...state,
         [action.payload.name]: {
           ...state[action.payload.name],
           isFinished: true,
-          progress: "success"
-        }
+          progress: 'success',
+        },
       };
-    case "TOGGLE_ONE_CHECK":
+    case 'TOGGLE_ONE_CHECK':
       return {
         ...state,
         [action.payload.name]: {
           ...state[action.payload.name],
-          checked: !state[action.payload.name].checked
-        }
+          checked: !state[action.payload.name].checked,
+        },
       };
-    case "TOGGLE_ALL_CHECK":
+    case 'TOGGLE_ALL_CHECK':
       let newLessons = {};
       _.forEach(
         state,
         value =>
           (newLessons[value.name] = {
             ...value,
-            checked: action.payload.checked
+            checked: action.payload.checked,
           })
       );
       return newLessons;
-    case "FILTER_LESSONS":
+    case 'FILTER_LESSONS':
       const newSelectedLessons = {};
       _.forEach(videos, l => {
         const videoName = l.name.toLowerCase();
@@ -48,9 +48,9 @@ export default videos => (state, action) => {
         }
       });
       return newSelectedLessons;
-    case "RESET":
+    case 'RESET':
       return action.payload.videos;
     default:
-      throw new Error();
+      return state;
   }
 };

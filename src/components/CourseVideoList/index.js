@@ -1,13 +1,13 @@
-import React from "react";
-import "react-sweet-progress/lib/style.css";
-import ScrollBar from "react-perfect-scrollbar";
-import "react-perfect-scrollbar/dist/css/styles.css";
-import _ from "lodash";
-import { Player, BigPlayButton, LoadingSpinner } from "video-react";
-import "video-react/dist/video-react.css";
-import { Checkbox } from "../../UI";
+import React from 'react';
+import 'react-sweet-progress/lib/style.css';
+import ScrollBar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import _ from 'lodash';
+import { Player, BigPlayButton, LoadingSpinner } from 'video-react';
+import 'video-react/dist/video-react.css';
+import { Checkbox } from '../../UI';
 
-import * as S from "./styles.js";
+import * as S from './styles.js';
 
 const Row = React.memo(props => {
   const {
@@ -16,7 +16,7 @@ const Row = React.memo(props => {
     openIndex,
     setOpenIndex,
     lesson,
-    index
+    index,
   } = props;
 
   return (
@@ -48,11 +48,11 @@ const Row = React.memo(props => {
         </div>
         <S.RemainingTimer>
           {lesson.isFinished ? (
-            "Completed"
+            'Completed'
           ) : (
             <div>
               {lesson.status.remaining === 0 ? (
-                ""
+                ''
               ) : (
                 <>
                   {lesson.status.remaining}
@@ -63,7 +63,7 @@ const Row = React.memo(props => {
           )}
         </S.RemainingTimer>
       </S.Video>
-      <S.PosedWatch pose={openIndex === index ? "open" : "closed"}>
+      <S.PosedWatch pose={openIndex === index ? 'open' : 'closed'}>
         {openIndex === index && (
           <Player playsInline src={lesson.url}>
             <BigPlayButton position="center" />
