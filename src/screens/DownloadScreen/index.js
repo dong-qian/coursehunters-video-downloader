@@ -81,22 +81,19 @@ const DownloadScreen = React.memo(props => {
     return false;
   };
 
-  const finishAll = () => {
-    const completionNotification = new Notification('Download Completed', {
-      body: `${selectedLessons} videos are successfully downloaded`,
-    });
-    completionNotification.show();
+  const reset = () => {
     setSpeed(0);
     setIsStart(false);
   };
 
-  const reset = () => {
-    // dispatch({
-    //   type: 'RESET',
-    //   payload: { videos },
-    // });
-    setSpeed(0);
-    setIsStart(false);
+  const finishAll = () => {
+    const completionNotification = new Notification({
+      title: `Download Completed`,
+      subtitle: courseName,
+      body: `${_.size(selectedLessons)} videos are successfully downloaded`,
+    });
+    completionNotification.show();
+    reset();
   };
 
   const handleStop = () => {
