@@ -1,5 +1,7 @@
 export const formatRemainingTime = time => {
-  return time > 60 ? `${Math.floor(time / 60)}m` : `${Math.floor(time)}s`;
+  return time > 60
+    ? `${Math.floor(time / 60)} mins`
+    : `${Math.floor(time)} secs`;
 };
 
 export const formatBytes = (bytes, decimals) => {
@@ -17,6 +19,6 @@ export const formatStatus = status => {
     transferred: formatBytes(status.size.transferred),
     speed: Math.floor(status.speed / 1024),
     remaining: formatRemainingTime(status.time.remaining),
-    percentage: Math.floor(status.percent * 100)
+    percentage: Math.floor(status.percent * 100),
   };
 };

@@ -89,12 +89,6 @@
     "directories": {
       "buildResources": "resources",
       "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "coursehunters-video-downloader",
-      "repo": "coursehunters-video-downloader",
-      "private": false
     }
   }
 }

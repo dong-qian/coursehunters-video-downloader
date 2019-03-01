@@ -1,8 +1,8 @@
-import styled from "styled-components/macro";
-import { Button } from "../../UI";
+import styled from 'styled-components/macro';
+import { Button } from '../../UI';
 
 export const Container = styled.div`
-  font-family: Raleway, "Roboto Mono";
+  font-family: Raleway, 'Roboto Mono';
 `;
 export const Band = styled.div`
   font-size: 1.5rem;
@@ -41,7 +41,7 @@ export const Speed = styled.span`
 
 export const BackButton = styled(Button)`
   position: absolute;
-  bottom: 4.5rem;
+  bottom: 4.2rem;
   left: 15%;
   /* width: 100%; */
   width: 170px;

@@ -76,11 +76,13 @@ const Row = React.memo(props => {
 });
 
 const CourseVideoList = React.memo(props => {
-  const { lessons, changeSelectedLessons, isStart } = props;
+  const { lessons, changeSelectedLessons, isStart, isMacOS } = props;
   const [openIndex, setOpenIndex] = React.useState();
 
+  console.log(isMacOS);
+
   return (
-    <S.Container>
+    <S.Container isMacOS={isMacOS}>
       <ScrollBar>
         <div>
           {_.map(lessons, (lesson, index) => {

@@ -1,15 +1,17 @@
-import React from "react";
-import _ from "lodash";
+import React from 'react';
+import _ from 'lodash';
 
-import * as S from "./styles";
-import { CourseVideoList, DownloadController, Sidebar } from "../../components";
-import { downloader, helper } from "../../untils";
+import * as S from './styles';
+import { CourseVideoList, DownloadController, Sidebar } from '../../components';
+import { downloader, helper } from '../../untils';
 
-import lessonRedcuer from "./lessonReducer";
+import lessonRedcuer from './lessonReducer';
 
 // electron remote
-const electron = window.require("electron");
+const electron = window.require('electron');
 const dialog = electron.remote.dialog;
+const Notification = electron.remote.Notification;
+const isMacOS = electron.remote.process.platform === 'darwin';
 
 const DownloadScreen = React.memo(props => {
   const { url, videos } = props;
@@ -19,52 +21,52 @@ const DownloadScreen = React.memo(props => {
   const selectedLessons = _.filter(lessons, l => l.checked === true);
 
   const courseName = React.useMemo(
-    () => _.startCase(_.replace(_.last(url.split("/")), "-", " ")),
+    () => _.startCase(_.replace(_.last(url.split('/')), '-', ' ')),
     [url]
   );
 
   const updateDownloadStatus = (status, name) => {
     const formatedStatus = helper.formatStatus(status);
     dispatch({
-      type: "UPDATE_STATUS",
-      payload: { name, status: formatedStatus }
+      type: 'UPDATE_STATUS',
+      payload: { name, status: formatedStatus },
     });
     setSpeed(formatedStatus.speed);
   };
 
   const setFinishDownloadOne = name =>
     dispatch({
-      type: "FINISH_ONE",
-      payload: { name }
+      type: 'FINISH_ONE',
+      payload: { name },
     });
 
   const changeSelectedLessons = name =>
     dispatch({
-      type: "TOGGLE_ONE_CHECK",
-      payload: { name }
+      type: 'TOGGLE_ONE_CHECK',
+      payload: { name },
     });
 
   const handleSelectAll = () =>
     dispatch({
-      type: "TOGGLE_ALL_CHECK",
-      payload: { checked: true }
+      type: 'TOGGLE_ALL_CHECK',
+      payload: { checked: true },
     });
 
   const handleDeSelectAll = () =>
     dispatch({
-      type: "TOGGLE_ALL_CHECK",
-      payload: { checked: false }
+      type: 'TOGGLE_ALL_CHECK',
+      payload: { checked: false },
     });
 
   const filterLessons = e =>
     dispatch({
-      type: "FILTER_LESSONS",
-      payload: { name: e.target.value }
+      type: 'FILTER_LESSONS',
+      payload: { name: e.target.value },
     });
 
   const handleStart = () => {
     const downloadPath = dialog.showOpenDialog({
-      properties: ["openDirectory"]
+      properties: ['openDirectory'],
     });
 
     if (downloadPath === undefined) return true;
@@ -80,14 +82,19 @@ const DownloadScreen = React.memo(props => {
   };
 
   const finishAll = () => {
+    const completionNotification = new Notification('Download Completed', {
+      body: `${selectedLessons} videos are successfully downloaded`,
+    });
+    completionNotification.show();
+    setSpeed(0);
     setIsStart(false);
   };
 
   const reset = () => {
-    dispatch({
-      type: "RESET",
-      payload: { videos }
-    });
+    // dispatch({
+    //   type: 'RESET',
+    //   payload: { videos },
+    // });
     setSpeed(0);
     setIsStart(false);
   };
@@ -123,6 +130,7 @@ const DownloadScreen = React.memo(props => {
           isStart={isStart}
           lessons={lessons}
           changeSelectedLessons={changeSelectedLessons}
+          isMacOS={isMacOS}
         />
       </S.Right>
     </S.Container>

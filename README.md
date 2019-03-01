@@ -58,7 +58,7 @@ This application used following dependences.
 
 ### Building apps
 
-`yarn electron-pack` or `npm run electron-pack`
+`yarn electron-release-all` or `npm run electron-release-all`
 
 ## Roadmap
 
