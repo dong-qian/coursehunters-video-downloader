@@ -1,5 +1,9 @@
 # CourseHunters Video Downloader
 
+## ❤️ Important ❤️
+
+## Coursehunters.net updated their website, please download the new version!
+
 ---
 
 > 🛠 An application to help you download thousands of tutorial from coursehunters.net for free by one click 💪
