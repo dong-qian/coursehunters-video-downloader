@@ -20,11 +20,6 @@ const DownloadScreen = React.memo(props => {
   const [speed, setSpeed] = React.useState(0);
   const selectedLessons = _.filter(lessons, l => l.checked === true);
 
-  const courseName = React.useMemo(
-    () => _.startCase(_.replace(_.last(url.split('/')), '-', ' ')),
-    [url]
-  );
-
   const updateDownloadStatus = (status, name) => {
     const formatedStatus = helper.formatStatus(status);
     dispatch({
@@ -71,6 +66,7 @@ const DownloadScreen = React.memo(props => {
 
     if (downloadPath === undefined) return true;
     downloader.downloadVideos(
+      props.courseName,
       downloadPath,
       url,
       selectedLessons,
@@ -89,7 +85,7 @@ const DownloadScreen = React.memo(props => {
   const finishAll = () => {
     const completionNotification = new Notification({
       title: `Download Completed`,
-      subtitle: courseName,
+      subtitle: props.courseName,
       body: `${_.size(selectedLessons)} videos are successfully downloaded`,
     });
     completionNotification.show();
@@ -113,7 +109,7 @@ const DownloadScreen = React.memo(props => {
         />
       </S.Left>
       <S.Right>
-        <S.Title>{courseName}</S.Title>
+        <S.Title>{props.courseName}</S.Title>
         <DownloadController
           isStart={isStart}
           setIsStart={setIsStart}

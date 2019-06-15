@@ -29,7 +29,7 @@ const getExsitVideoList = pathname => {
   return new Promise((resolve, reject) => {
     const existVideoList = [];
     const rl = readline.createInterface({
-      input: fs.createReadStream(`${pathname}/videoList.txt`)
+      input: fs.createReadStream(`${pathname}/videoList.txt`),
     });
 
     rl.on('line', line => {
@@ -75,6 +75,7 @@ const downloadOne = (
 };
 
 export const downloadVideos = async (
+  courseName,
   downloadPath,
   url,
   lessons,
@@ -83,7 +84,6 @@ export const downloadVideos = async (
   setFinishAll
 ) => {
   isStoped = false;
-  let courseName = _.last(url.split('/'));
   const pathname = `${downloadPath}/${courseName}`;
 
   // make download folder

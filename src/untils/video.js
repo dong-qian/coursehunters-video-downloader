@@ -22,24 +22,27 @@ const getCourseNamesAndURLS = async courseUrl => {
     let lessonNames = [];
     let $ = cheerio.load(data.data);
 
-    let html = $('#lessons-list');
+    const courseName = $('.hero-description')[0].children[0].data;
+
+    const html = $('#lessons-list');
     let dataArray = html
-      .children('.lessons-list__li')
+      .children('.lessons-item')
       .children()
       .toArray();
+
+    const filterNames = dataArray.filter(
+      el => el.attribs.class === 'lessons-name'
+    );
+
+    filterNames.forEach(el => {
+      const videoName = el.children[0].data.replace(/[/:*?"<>|]/g, '');
+      const name = videoName.replace(new RegExp('Урок', 'g'), 'Lesson');
+      lessonNames.push(name);
+    });
 
     const filterLessonUrls = dataArray.filter(
       el => el.name === 'link' && el.attribs.itemprop === 'contentUrl'
     );
-    const filterNames = dataArray.filter(el => el.name === 'span');
-
-    filterNames.forEach(el => {
-      if (el.name === 'span') {
-        const videoName = el.children[0].data.replace(/[/:*?"<>|]/g, '');
-        const name = videoName.replace(new RegExp('Урок', 'g'), 'Lesson');
-        lessonNames.push(name);
-      }
-    });
 
     // format video download information
     const lessons = {};
@@ -55,8 +58,8 @@ const getCourseNamesAndURLS = async courseUrl => {
           total: 0,
           speed: 0,
           percentage: 0,
-          remaining: 0
-        }
+          remaining: 0,
+        },
       };
     });
 
@@ -64,7 +67,7 @@ const getCourseNamesAndURLS = async courseUrl => {
       throw new Error('Course url is not valid or videos are VIP only');
     }
 
-    return lessons;
+    return { lessons, courseName };
   } catch (err) {
     throw err;
   }

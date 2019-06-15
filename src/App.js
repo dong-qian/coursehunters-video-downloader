@@ -37,9 +37,11 @@ const GlobalStyle = createGlobalStyle`
 const App = memo(() => {
   const [url, setUrl] = useState('');
   const [videos, setVideos] = useState([]);
+  const [courseName, setCourseName] = useState([]);
 
   const setData = data => {
-    setVideos(data);
+    setVideos(data.lessons);
+    setCourseName(data.courseName);
   };
 
   return (
@@ -64,7 +66,12 @@ const App = memo(() => {
               exact
               path="/download"
               render={props => (
-                <DownloadScreen {...props} url={url} videos={videos} />
+                <DownloadScreen
+                  {...props}
+                  url={url}
+                  videos={videos}
+                  courseName={courseName}
+                />
               )}
             />
           </Switch>
