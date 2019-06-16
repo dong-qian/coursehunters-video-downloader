@@ -37,9 +37,7 @@ const getCourseNamesAndURLS = async courseUrl => {
     filterNames.forEach((el, idx) => {
       const videoName = el.children[0].data.replace(/[/:*?"<>|]/g, '');
       const name = videoName.replace(new RegExp('Урок', 'g'), 'Lesson');
-      const number = idx + 1;
-
-      lessonNames.push(`${number}. ${name}`);
+      lessonNames.push(`${idx + 1}. ${name}`);
     });
 
     const filterLessonUrls = dataArray.filter(
