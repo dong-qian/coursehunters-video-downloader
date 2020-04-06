@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/github/stars/qiandongyq/coursehunters-video-downloader.svg?style=social" />
 </p>
 
-[Feature](#Features) | [Credit](#Credit) | [Demo](#Demo) | [Quick Start](#Quick-Start) | [Roadmap](#Roadmap)
+[Feature](#Features) | [Credit](#Credit) | [Demo](#Demo) | [Quick Start](#Quick-Start)
 
 Cousehunters resource video programming tutorials for front and back end developers. Help you build up your skills to next level.
 
@@ -63,12 +63,6 @@ This application used following dependences.
 ### Building apps
 
 `yarn electron-release-all` or `npm run electron-release-all`
-
-## Roadmap
-
-- Add testing
-- Add settings (default save location / theme)
-- Add user support(coursehunters user for download prerelease videos)
 
 ## Contribute
 

@@ -46,11 +46,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "yarn clean && yarn build && build -mwl",
-    "electron-release-all": "yarn clean && yarn build && build -mwl",
-    "electron-release-win": "yarn clean && yarn build && build --win",
-    "electron-release-mac": "yarn clean && yarn build && build --mac",
-    "electron-release-linux": "yarn clean && yarn build && build --linux",
+    "electron-pack": "yarn clean && yarn build && electron-builder -mwl",
+    "electron-release-all": "yarn clean && yarn build && electron-builder -mwl",
+    "electron-release-win": "yarn clean && yarn build && electron-builder --win",
+    "electron-release-mac": "yarn clean && yarn build && electron-builder --mac",
+    "electron-release-linux": "yarn clean && yarn build && electron-builder --linux",
     "postinstall": "install-app-deps package.json",
     "clean": "rm -rf build dist release"
   },
@@ -83,7 +83,7 @@
   "homepage": "./",
   "build": {
     "appId": "com.coursehunters-video-downloader.app",
-    "copyright": "Copyright © 2018 ${author}",
+    "copyright": "Copyright © 2020 ${author}",
     "productName": "Coursehunters Video Downloader",
     "files": [
       "build/**/*"
