@@ -5,9 +5,9 @@ const progress = window.require('request-progress');
 const _ = require('lodash');
 
 let req;
-let isStoped = false;
+let isStopped = false;
 
-const makeDownloadDir = pathname => {
+const makeDownloadDir = (pathname) => {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(pathname)) {
       fs.mkdir(pathname, () => {
@@ -25,21 +25,21 @@ const makeDownloadDir = pathname => {
   });
 };
 
-const getExsitVideoList = pathname => {
+const getExistVideoList = (pathname) => {
   return new Promise((resolve, reject) => {
     const existVideoList = [];
     const rl = readline.createInterface({
       input: fs.createReadStream(`${pathname}/videoList.txt`),
     });
 
-    rl.on('line', line => {
+    rl.on('line', (line) => {
       var arr = line.split('\n');
       existVideoList.push(arr[0]);
     })
       .on('close', () => {
         resolve(existVideoList);
       })
-      .on('error', e => {
+      .on('error', (e) => {
         console.log('error', e);
         reject();
       });
@@ -49,21 +49,21 @@ const getExsitVideoList = pathname => {
 const downloadOne = (
   lesson,
   pathname,
-  updateDownloadStatuss,
+  updateDownloadStatus,
   setFinishDownloadOne
 ) => {
   return new Promise((resolve, reject) => {
     req = request(encodeURI(lesson.url));
     progress(req, { throttle: 2000, delay: 1000 })
-      .on('progress', state => {
-        updateDownloadStatuss(state, lesson.name);
+      .on('progress', (state) => {
+        updateDownloadStatus(state, lesson.name);
       })
-      .on('error', err => {
+      .on('error', (err) => {
         console.log(`${err}`.red);
         reject();
       })
       .on('end', () => {
-        if (isStoped) return resolve();
+        if (isStopped) return resolve();
         setFinishDownloadOne(lesson.name);
         resolve();
         fs.appendFile(`${pathname}/videoList.txt`, `${lesson.name}\n`, () => {
@@ -77,43 +77,39 @@ const downloadOne = (
 export const downloadVideos = async (
   courseName,
   downloadPath,
-  url,
   lessons,
-  updateDownloadStatuss,
+  updateDownloadStatus,
   setFinishDownloadOne,
   setFinishAll
 ) => {
-  isStoped = false;
+  isStopped = false;
   const pathname = `${downloadPath}/${courseName}`;
-
   // make download folder
   await makeDownloadDir(pathname);
 
   // get exist videos
-  const existVideoList = await getExsitVideoList(pathname);
-
+  const existVideoList = await getExistVideoList(pathname);
   // start download video one by one
   // eslint-disable-next-line
   for (const [i, lesson] of lessons.entries()) {
-    if (isStoped) return;
+    if (isStopped) return;
     if (!_.includes(existVideoList, lesson.name)) {
       await downloadOne(
         lesson,
         pathname,
-        updateDownloadStatuss,
+        updateDownloadStatus,
         setFinishDownloadOne
       );
     } else {
       setFinishDownloadOne(lesson.name);
     }
   }
-
   setFinishAll();
 };
 
 export const stopDownload = () => {
   if (req !== undefined) {
     req.abort();
-    isStoped = true;
+    isStopped = true;
   }
 };

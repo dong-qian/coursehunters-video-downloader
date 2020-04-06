@@ -9,7 +9,7 @@ import { Checkbox } from '../../UI';
 
 import * as S from './styles.js';
 
-const Row = React.memo(props => {
+const Row = React.memo((props) => {
   const {
     isStart,
     changeSelectedLessons,
@@ -75,12 +75,9 @@ const Row = React.memo(props => {
   );
 });
 
-const CourseVideoList = React.memo(props => {
+const CourseVideoList = React.memo((props) => {
   const { lessons, changeSelectedLessons, isStart, isMacOS } = props;
   const [openIndex, setOpenIndex] = React.useState();
-
-  console.log(isMacOS);
-
   return (
     <S.Container isMacOS={isMacOS}>
       <ScrollBar>

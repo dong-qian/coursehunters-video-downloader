@@ -2,7 +2,7 @@
   "name": "coursehunters-video-downloader",
   "description": "A useful tool to help you download thousands of tutorial from coursehunters.net",
   "author": "Dong Qian",
-  "version": "0.0.2",
+  "version": "1.1.0",
   "license": "MIT",
   "keywords": [
     "react",
@@ -20,9 +20,9 @@
     "url": "git@github.com:qiandongyq/coursehunters-video-downloader.git"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.2",
-    "concurrently": "^4.1.0",
+    "concurrently": "^5.1.0",
     "electron-is-dev": "^1.0.1",
     "lodash": "^4.17.11",
     "react": "^16.8.0-alpha.1",
@@ -30,15 +30,15 @@
     "react-lottie": "^1.2.3",
     "react-perfect-scrollbar": "^1.4.4",
     "react-pose": "^4.0.7",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.3",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.1",
     "react-sweet-progress": "^1.1.2",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
-    "styled-components": "^4.1.3",
-    "styled-reset": "^1.6.8",
-    "validator": "^10.11.0",
-    "video-react": "^0.13.2"
+    "styled-components": "^5.0.1",
+    "styled-reset": "^4.1.2",
+    "validator": "^13.0.0",
+    "video-react": "^0.14.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -70,13 +70,14 @@
   ],
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.0",
-    "cross-env": "^5.2.0",
-    "electron": "^4.0.0",
-    "electron-builder": "^20.38.4",
-    "husky": "^1.3.1",
-    "pretty-quick": "^1.10.0",
+    "cross-env": "^7.0.2",
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1",
+    "husky": "^4.2.3",
+    "prettier": "^2.0.3",
+    "pretty-quick": "^2.0.1",
     "typescript": "^3.5.3",
-    "wait-on": "^3.2.0"
+    "wait-on": "^4.0.1"
   },
   "main": "public/electron.js",
   "homepage": "./",

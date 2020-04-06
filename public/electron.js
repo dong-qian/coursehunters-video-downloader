@@ -17,7 +17,7 @@ const appMenu = {
     {
       label: 'Quit',
       accelerator: 'Command+Q',
-      click: function() {
+      click: function () {
         app.quit();
       },
     },
@@ -83,6 +83,7 @@ const createWindow = () => {
     ...plateFormOptions,
     webPreferences: {
       webSecurity: false,
+      nodeIntegration: true,
     },
   });
 

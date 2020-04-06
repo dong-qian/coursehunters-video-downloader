@@ -5,7 +5,7 @@ import * as S from './styles';
 import { CourseVideoList, DownloadController, Sidebar } from '../../components';
 import { downloader, helper } from '../../untils';
 
-import lessonRedcuer from './lessonReducer';
+import lessonReducer from './lessonReducer';
 
 // electron remote
 const electron = window.require('electron');
@@ -13,29 +13,29 @@ const dialog = electron.remote.dialog;
 const Notification = electron.remote.Notification;
 const isMacOS = electron.remote.process.platform === 'darwin';
 
-const DownloadScreen = React.memo(props => {
-  const { url, videos } = props;
-  const [lessons, dispatch] = React.useReducer(lessonRedcuer(videos), videos);
+const DownloadScreen = React.memo((props) => {
+  const { videos } = props;
+  const [lessons, dispatch] = React.useReducer(lessonReducer(videos), videos);
   const [isStart, setIsStart] = React.useState(false);
   const [speed, setSpeed] = React.useState(0);
-  const selectedLessons = _.filter(lessons, l => l.checked === true);
+  const selectedLessons = _.filter(lessons, (l) => l.checked === true);
 
   const updateDownloadStatus = (status, name) => {
-    const formatedStatus = helper.formatStatus(status);
+    const formattedStatus = helper.formatStatus(status);
     dispatch({
       type: 'UPDATE_STATUS',
-      payload: { name, status: formatedStatus },
+      payload: { name, status: formattedStatus },
     });
-    setSpeed(formatedStatus.speed);
+    setSpeed(formattedStatus.speed);
   };
 
-  const setFinishDownloadOne = name =>
+  const setFinishDownloadOne = (name) =>
     dispatch({
       type: 'FINISH_ONE',
       payload: { name },
     });
 
-  const changeSelectedLessons = name =>
+  const changeSelectedLessons = (name) =>
     dispatch({
       type: 'TOGGLE_ONE_CHECK',
       payload: { name },
@@ -53,22 +53,22 @@ const DownloadScreen = React.memo(props => {
       payload: { checked: false },
     });
 
-  const filterLessons = e =>
+  const filterLessons = (e) =>
     dispatch({
       type: 'FILTER_LESSONS',
       payload: { name: e.target.value },
     });
 
   const handleStart = () => {
-    const downloadPath = dialog.showOpenDialog({
+    const downloadPath = dialog.showOpenDialogSync({
       properties: ['openDirectory'],
     });
 
+    console.log('downloadPath', downloadPath);
     if (downloadPath === undefined) return true;
     downloader.downloadVideos(
       props.courseName,
-      downloadPath,
-      url,
+      downloadPath[0],
       selectedLessons,
       updateDownloadStatus,
       setFinishDownloadOne,
