@@ -20,7 +20,7 @@
     "url": "git@github.com:qiandongyq/coursehunters-video-downloader.git"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.2",
     "concurrently": "^5.1.0",
     "electron-is-dev": "^1.0.1",
