@@ -37,7 +37,7 @@
     "request-progress": "^3.0.0",
     "styled-components": "^5.0.1",
     "styled-reset": "^4.1.2",
-    "validator": "^13.0.0",
+    "validator": "^13.7.0",
     "video-react": "^0.14.1"
   },
   "scripts": {
